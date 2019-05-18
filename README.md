@@ -35,6 +35,17 @@ Copyrights (C) NEXON Corporation and NEXON Co., Ltd. All Rights Reserved.
 
 `棒読みちゃん連携`のチェックを入れた時点で棒読みちゃんが起動していない場合、指定されたBouyomiChan.exeを起動します。この場合は、`棒読みちゃん連携`のアンチェック/TWLogAnalyzerの終了時に、棒読みちゃんに停止要求を投げます。ただ、棒読みちゃん側でダイアログが表示されている場合など、うまく停止できないケースがあったので、自動停止しなかった場合は自分で棒読みちゃんを数量させてください。
 
+ビルド済みバイナリは[こちら](https://github.com/wakayuki/TWLogAnalyzer/releases)から。
+
+# 動作環境
+
+Talse Weaverが動く環境であればほぼ大丈夫と思いますが、自分の環境でしかテストできていないため保証はできません。
+
+## テストに使った環境
+- Windows 10 Pro x64
+- CPU Core i5-7600
+- メモリ 16GB
+
 # TODO
 - アイコン作る
 - メンテ後はレイドボス沸き時間かわるので、予測をしないようにする
