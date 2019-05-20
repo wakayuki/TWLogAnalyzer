@@ -152,6 +152,9 @@ namespace TWLogAnalyzer
                     DateTime NextBossTime = GetNextBossTime(GolronTime, GolronInterval);
                     Window.lblGolronNextTime.Content = NextBossTime.ToString(BossNextTimeForamt);
                     Window.UpdateNextGolronTime(NextBossTime);
+
+                    // 2重更新をしないようにするため、1度更新に使った情報は消しておく
+                    GolronTime = DateTime.MinValue;
                 }
 
                 if (!GolmdoafTime.Equals(DateTime.MinValue))
@@ -160,6 +163,9 @@ namespace TWLogAnalyzer
                     DateTime NextBossTime = GetNextBossTime(GolmdoafTime, GolmodafIntaval);
                     Window.lblGolmodafNextTime.Content = NextBossTime.ToString(BossNextTimeForamt);
                     Window.UpdateNextGolmodafTime(NextBossTime);
+
+                    // 2重更新をしないようにするため、1度更新に使った情報は消しておく
+                    GolmdoafTime = DateTime.MinValue;
                 }
             }));
         }
