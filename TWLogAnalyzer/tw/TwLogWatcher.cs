@@ -99,7 +99,6 @@ namespace TWLogAnalyzer.tw
                             Logger.Instance.PutMessage($"Change target log file to {fileInfo.FullName}");
                         }
 
-                        Thread.Sleep(1000);
                         continue;
                     }
 
@@ -115,6 +114,7 @@ namespace TWLogAnalyzer.tw
                                 if (log == null)
                                 {
                                     Logger.Instance.PutMessage($"Invalid format message: {line}");
+                                    continue;
                                 }
                                 Receiver.Receive(log);
                             }
@@ -125,6 +125,11 @@ namespace TWLogAnalyzer.tw
                 catch (Exception ex)
                 {
                     Logger.Instance.PutMessage($"File Access Error: {ex.Message}");
+                    Logger.Instance.PutMessage($"{ex.StackTrace}");
+                }
+                finally
+                {
+                    Thread.Sleep(1000);
                 }
             }
         }

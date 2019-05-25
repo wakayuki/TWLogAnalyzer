@@ -38,7 +38,7 @@ namespace TWLogAnalyzer.common
         {
             if (!logEnabled) return;
 
-            File.AppendAllText(logFilePath, message + Environment.NewLine);
+            File.AppendAllText(logFilePath, $"{DateTime.Now.ToString("yyyy/MM/dd/ HH:mm:ss.fff")} {message}{Environment.NewLine}");
         }
     }
 }
