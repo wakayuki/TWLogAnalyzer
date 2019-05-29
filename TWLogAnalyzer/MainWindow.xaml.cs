@@ -11,6 +11,9 @@ using System.Windows.Threading;
 using TWLogAnalyzer.common;
 using TWLogAnalyzer.tw;
 using TWLogAnalyzer.voice.bouyomi;
+using System.Collections.ObjectModel;
+using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace TWLogAnalyzer
 {
@@ -66,6 +69,7 @@ namespace TWLogAnalyzer
             }
         }
 
+
         private TwManager Manager;
         private TwLogAnalyzerSettings Settings;
         private MainWindowReceiver Receiver;
@@ -77,7 +81,7 @@ namespace TWLogAnalyzer
         // 次のボスアナウンス時間
         private DateTime NextGolronTime = DateTime.MaxValue;
         private DateTime NextGolmodafTime = DateTime.MaxValue;
-
+        
         public MainWindow()
         {
             InitializeComponent();
@@ -110,6 +114,14 @@ namespace TWLogAnalyzer
             timer.Interval = TimeSpan.FromMilliseconds(1000);
             timer.Tick += Timer_Tick;
             timer.Start();
+        }
+
+        internal void InitChatLog()
+        {
+            Dispatcher.Invoke((Action)(() =>
+            {
+                ((MainViewModel)this.DataContext).Init();
+            }));
         }
 
         private void Timer_Tick(object sender, EventArgs e)
@@ -282,6 +294,47 @@ namespace TWLogAnalyzer
         public void UpdateNextGolmodafTime(DateTime time)
         {
             NextGolmodafTime = time.AddMinutes(-3);
+        }
+
+        public void AddClubChat(TwChatLog log)
+        {
+            Dispatcher.Invoke((Action)(() =>
+            {
+                (this.DataContext as MainViewModel).ClubChats.Add(log);
+                ScrollToLast(this.clubChat);
+            }));
+        }
+
+        public void AddTeamChat(TwChatLog log)
+        {
+            Dispatcher.Invoke((Action)(() =>
+            {
+                (this.DataContext as MainViewModel).TeamChats.Add(log);
+                ScrollToLast(this.teamChat);
+            }));
+        }
+        public void AddWisperChat(TwChatLog log)
+        {
+            {
+                Dispatcher.Invoke((Action)(() =>
+                {
+                    (this.DataContext as MainViewModel).WisperChats.Add(log);
+                    ScrollToLast(this.wisperChat);
+                }));
+            }
+        }
+
+        private void ScrollToLast(DataGrid grid)
+        {
+            if(grid.Items.Count > 0)
+            {
+                Decorator border = VisualTreeHelper.GetChild(grid, 0) as Decorator;
+                if (border != null)
+                {
+                    ScrollViewer scroll = border.Child as ScrollViewer;
+                    if (scroll != null) scroll.ScrollToEnd();
+                }
+            }
         }
     }
 }

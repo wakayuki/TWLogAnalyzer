@@ -78,6 +78,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="MainViewModel.cs" />
     <Compile Include="MainWindowReceiver.cs" />
     <Compile Include="TwLogAnalyzerSettings.cs" />
     <Compile Include="tw\TwExpManager.cs" />

@@ -43,7 +43,6 @@ namespace TWLogAnalyzer
         public MainWindowReceiver(MainWindow window)
         {
             this.Window = window;
-
             GolronInterval = int.Parse(ConfigurationManager.AppSettings["Boss.Golron.Interval"]);
             GolmodafIntaval = int.Parse(ConfigurationManager.AppSettings["Boss.Golmodaf.Interval"]);
         }
@@ -64,23 +63,21 @@ namespace TWLogAnalyzer
 
             if (log.Kind == TwLogKind.CLUB)
             {
-                Window.Dispatcher.Invoke((Action)(() =>
-                {
-                    Window.txtChatClub.AppendText(log.Message + Environment.NewLine);
-                    Window.txtChatTeam.ScrollToEnd();
-                    Speak(log.Message);
-                }));
+                Window.AddClubChat(log);
+                Speak(log.Message);
             }
 
 
             if (log.Kind == TwLogKind.TEAM)
             {
-                Window.Dispatcher.Invoke((Action)(() =>
-                {
-                    Window.txtChatTeam.AppendText(log.Message + Environment.NewLine);
-                    Window.txtChatTeam.ScrollToEnd();
-                    Speak(log.Message);
-                }));
+                Window.AddTeamChat(log);
+                Speak(log.Message);
+            }
+
+            if (log.Kind == TwLogKind.WHISPER)
+            {
+                Window.AddWisperChat(log);
+                Speak(log.Message);
             }
         }
 
@@ -127,11 +124,7 @@ namespace TWLogAnalyzer
             IsRealTimeLogMode = true;
 
             // 読み込み終わったのでUIに初期値を詰める
-            Window.Dispatcher.Invoke((Action)(() =>
-            {
-                Window.txtChatClub.Text = "";
-                Window.txtChatTeam.Text = "";
-            }));
+            Window.InitChatLog();
 
             // 過去ログから読み込んだ情報でUIをアップデート
             UpdateBossView();
