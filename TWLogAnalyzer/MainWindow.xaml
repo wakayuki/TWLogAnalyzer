@@ -6,44 +6,57 @@
         xmlns:local="clr-namespace:TWLogAnalyzer"
         mc:Ignorable="d"
         Closing="Window_Closing"
-        Title="TWLogAnalyzer" Height="514" Width="800">
+        Title="TWLogAnalyzer" Height="514" Width="682">
+    <Window.DataContext>
+        <local:MainViewModel/>
+    </Window.DataContext>
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="221*"/>
-            <RowDefinition Height="262*"/>
-        </Grid.RowDefinitions>
         <Button x:Name="btnStart" Content="監視開始" HorizontalAlignment="Left" Margin="26,16,0,0" VerticalAlignment="Top" Width="75" Click="BtnStart_Click"/>
         <Button x:Name="btnEnd" Content="監視終了" HorizontalAlignment="Left" Margin="119,16,0,0" VerticalAlignment="Top" Width="75" Click="BtnEnd_Click"/>
         <CheckBox x:Name="chkBouyomi" Content="棒読みちゃん連携" HorizontalAlignment="Left" Height="18" Margin="212,19,0,0" VerticalAlignment="Top" Width="114" Checked="ChkBouyomi_Checked" Unchecked="ChkBouyomi_Unchecked"/>
         <TextBox x:Name="txtBouyomiPath" HorizontalAlignment="Left" Height="20" Margin="326,17,0,0" TextWrapping="Wrap" Text="BouyomiChan.exe" VerticalAlignment="Top" Width="287"/>
         <Label x:Name="label" Content="(BouyomiChan.exeのパスを指定してください)" HorizontalAlignment="Left" Margin="326,34,0,0" VerticalAlignment="Top"/>
         <Label x:Name="lblBouyomiState" Content="" Margin="627,16,0,0" VerticalAlignment="Top" RenderTransformOrigin="9.1,0.346" HorizontalAlignment="Left" Width="10"/>
-        <GroupBox x:Name="bossGroup" Header="ボス沸き情報(β】" HorizontalAlignment="Left" Height="158" Margin="10,65,0,0" VerticalAlignment="Top" Width="329" Grid.RowSpan="2">
-            <Grid Margin="0,0,-2,-12">
+        <GroupBox x:Name="bossGroup" Header="ボス沸き情報(β】" HorizontalAlignment="Left" Height="148" Margin="10,65,0,0" VerticalAlignment="Top" Width="329">
+            <Grid Margin="0,0,0,0">
                 <CheckBox x:Name="chkBossAnnounce" Content="ボス出現予測の棒読みちゃんアナウンスを実行する" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" Checked="ChkBossAnnounce_Checked" Unchecked="ChkBossAnnounce_Unchecked" Height="15" Width="256"/>
                 <Label x:Name="lblLastBoss" Content="前回出現時間" HorizontalAlignment="Left" Margin="69,39,0,0" VerticalAlignment="Top" Height="26" Width="105"/>
-                <Label x:Name="lblNextBoss" Content="次回出現予測時間" HorizontalAlignment="Left" Margin="194,39,0,0" VerticalAlignment="Top" Height="26" Width="105"/>
+                <Label x:Name="lblNextBoss" Content="次回出現予測時間" HorizontalAlignment="Left" Margin="194,39,0,0" VerticalAlignment="Top" Height="26" Width="105" Grid.ColumnSpan="2"/>
                 <Label x:Name="lblGolron" Content="ゴルロン:" HorizontalAlignment="Left" Margin="11,70,0,0" VerticalAlignment="Top" Height="26" Width="50"/>
                 <Label x:Name="lblGolronTime" Content="xxxx/xx/xx xx:xx:xx" HorizontalAlignment="Left" Margin="69,70,0,0" VerticalAlignment="Top" Height="26"/>
-                <Label x:Name="lblGolronNextTime" Content="xxxx/xx/xx xx:xx:xx" HorizontalAlignment="Left" Margin="194,70,0,0" VerticalAlignment="Top" Height="26"/>
+                <Label x:Name="lblGolronNextTime" Content="xxxx/xx/xx xx:xx:xx" HorizontalAlignment="Left" Margin="194,70,0,0" VerticalAlignment="Top" Height="26" Grid.ColumnSpan="2"/>
                 <Label x:Name="lblGolmodaf" Content="ゴルモダフ:" HorizontalAlignment="Left" Margin="3,101,0,0" VerticalAlignment="Top" Height="26" Width="58"/>
                 <Label x:Name="lblGolmodafTime" Content="xxxx/xx/xx xx:xx:xx" HorizontalAlignment="Left" Margin="69,101,0,0" VerticalAlignment="Top" Height="26"/>
-                <Label x:Name="lblGolmodafNextTime" Content="xxxx/xx/xx xx:xx:xx" HorizontalAlignment="Left" Margin="194,101,0,0" VerticalAlignment="Top" Height="26"/>
+                <Label x:Name="lblGolmodafNextTime" Content="xxxx/xx/xx xx:xx:xx" HorizontalAlignment="Left" Margin="194,101,0,0" VerticalAlignment="Top" Height="26" Grid.ColumnSpan="2"/>
             </Grid>
         </GroupBox>
-        <TabControl x:Name="tabControl" Margin="10,19,10,36" Grid.Row="1">
+        <TabControl x:Name="tabControl" Margin="10,0,10,36" Height="219" VerticalAlignment="Bottom">
             <TabItem Header="クラブ">
-                <Grid Background="#FFE5E5E5">
-                    <TextBox x:Name="txtChatClub" TextWrapping="Wrap" Grid.ColumnSpan="2" VerticalScrollBarVisibility="Auto"/>
-                </Grid>
+                <DataGrid x:Name="clubChat" Grid.ColumnSpan="2" AutoGenerateColumns="False" ItemsSource="{Binding ClubChats}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding TimeStampString}" CanUserResize="False" Header="時刻" Width="150"/>
+                        <DataGridTextColumn Binding="{Binding Message}" CanUserResize="True" Header="メッセージ" Width="*"/>
+                    </DataGrid.Columns>
+                </DataGrid>
             </TabItem>
             <TabItem Header="チーム">
-                <Grid Background="#FFE5E5E5">
-                    <TextBox x:Name="txtChatTeam" TextWrapping="Wrap" Grid.ColumnSpan="2" VerticalScrollBarVisibility="Auto"/>
-                </Grid>
+                <DataGrid x:Name="teamChat" Grid.ColumnSpan="2" AutoGenerateColumns="False" ItemsSource="{Binding TeamChats}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding TimeStampString}" CanUserResize="False" Header="時刻" Width="150"/>
+                        <DataGridTextColumn Binding="{Binding Message}" CanUserResize="True" Header="メッセージ" Width="*"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
+            <TabItem Header="耳打ち">
+                <DataGrid x:Name="wisperChat" Grid.ColumnSpan="2" AutoGenerateColumns="False" ItemsSource="{Binding WisperChats}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding TimeStampString}" CanUserResize="False" Header="時刻" Width="150"/>
+                        <DataGridTextColumn Binding="{Binding Message}" CanUserResize="True" Header="メッセージ" Width="*"/>
+                    </DataGrid.Columns>
+                </DataGrid>
             </TabItem>
         </TabControl>
-        <GroupBox x:Name="zikyuGroup" Header="時給計算(5分平均/10分平均)" HorizontalAlignment="Left" Height="87" Margin="359,65,0,0" VerticalAlignment="Top" Width="423">
+        <GroupBox x:Name="zikyuGroup" Header="時給計算(5分平均/10分平均)" Height="87" Margin="359,65,10,0" VerticalAlignment="Top">
             <Grid Margin="0,0,-2,-12">
                 <Label x:Name="lblExp" Content="経験値: " Margin="36,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="52"/>
                 <Label x:Name="lblExpValue" Content="" HorizontalAlignment="Left" Margin="88,10,0,0" VerticalAlignment="Top"/>

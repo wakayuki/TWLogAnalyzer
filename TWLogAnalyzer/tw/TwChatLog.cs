@@ -99,6 +99,11 @@ namespace TWLogAnalyzer.tw
 
         public DateTime TimeStamp { get; private set; }
 
+        /// <summary>
+        /// 画面表示用の日付の文字列。DataGridにバインドさせるためのほかの方法がわからん。。。
+        /// </summary>
+        public string TimeStampString { get; private set; }
+
         public string Message { get; private set; }
 
         public TwLogKind Kind { get; private set; }
@@ -111,6 +116,7 @@ namespace TWLogAnalyzer.tw
         private TwChatLog(DateTime timeStamp, TwLogKind kind, string message, int value)
         {
             this.TimeStamp = timeStamp;
+            this.TimeStampString = timeStamp.ToString("yyyy/MM/dd hh:mm:ss");
             this.Kind = kind;
             this.Message = message;
             this.Value = value;
