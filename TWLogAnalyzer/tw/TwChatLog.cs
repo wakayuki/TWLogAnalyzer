@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
 using System.Configuration;
-
+using System.Text.RegularExpressions;
 using TWLogAnalyzer.common;
 
 namespace TWLogAnalyzer.tw
