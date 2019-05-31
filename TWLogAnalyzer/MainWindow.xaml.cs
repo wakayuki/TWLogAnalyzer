@@ -81,7 +81,7 @@ namespace TWLogAnalyzer
         // 次のボスアナウンス時間
         private DateTime NextGolronTime = DateTime.MaxValue;
         private DateTime NextGolmodafTime = DateTime.MaxValue;
-        
+
         public MainWindow()
         {
             InitializeComponent();
@@ -315,18 +315,16 @@ namespace TWLogAnalyzer
         }
         public void AddWisperChat(TwChatLog log)
         {
+            Dispatcher.Invoke((Action)(() =>
             {
-                Dispatcher.Invoke((Action)(() =>
-                {
-                    (this.DataContext as MainViewModel).WisperChats.Add(log);
-                    ScrollToLast(this.wisperChat);
-                }));
-            }
+                (this.DataContext as MainViewModel).WisperChats.Add(log);
+                ScrollToLast(this.wisperChat);
+            }));
         }
 
         private void ScrollToLast(DataGrid grid)
         {
-            if(grid.Items.Count > 0)
+            if (grid.Items.Count > 0 && VisualTreeHelper.GetChildrenCount(grid) != 0)
             {
                 Decorator border = VisualTreeHelper.GetChild(grid, 0) as Decorator;
                 if (border != null)
