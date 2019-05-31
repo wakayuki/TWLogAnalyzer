@@ -1,7 +1,6 @@
 ﻿using System;
-using Microsoft.Win32;
 using System.Configuration;
-
+using Microsoft.Win32;
 using TWLogAnalyzer.common;
 
 namespace TWLogAnalyzer.tw

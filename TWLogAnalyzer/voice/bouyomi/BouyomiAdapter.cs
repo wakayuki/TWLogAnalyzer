@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Threading;
-using System.IO;
-using System.Diagnostics;
 using System.Configuration;
-
-using TWLogAnalyzer.common;
-
+using System.Diagnostics;
+using System.IO;
+using System.Threading;
 using FNF.Utility;
+using TWLogAnalyzer.common;
 using TWLogAnalyzer.tw;
 
 namespace TWLogAnalyzer.voice.bouyomi

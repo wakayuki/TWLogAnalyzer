@@ -8,24 +8,17 @@ namespace TWLogAnalyzer
         /// <summary>
         /// クラブチャット表示用
         /// </summary>
-        public ObservableCollection<TwChatLog> ClubChats { set; get; }
+        public ObservableCollection<TwChatLog> ClubChats { set; get; } = new ObservableCollection<TwChatLog>();
 
         /// <summary>
         /// チームチャット表示用
         /// </summary>
-        public ObservableCollection<TwChatLog> TeamChats { set; get; }
+        public ObservableCollection<TwChatLog> TeamChats { set; get; } = new ObservableCollection<TwChatLog>();
 
         /// <summary>
         /// 耳打ち表示用
         /// </summary>
-        public ObservableCollection<TwChatLog> WisperChats { set; get; }
-
-        public MainViewModel()
-        {
-            ClubChats = new ObservableCollection<TwChatLog>();
-            TeamChats = new ObservableCollection<TwChatLog>();
-            WisperChats = new ObservableCollection<TwChatLog>();
-        }
+        public ObservableCollection<TwChatLog> WisperChats { set; get; } = new ObservableCollection<TwChatLog>();
 
         public void Init()
         {

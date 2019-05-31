@@ -1,9 +1,8 @@
 ﻿using System;
-
-using TWLogAnalyzer.tw;
-using TWLogAnalyzer.common;
-using TWLogAnalyzer.voice;
 using System.Configuration;
+using TWLogAnalyzer.common;
+using TWLogAnalyzer.tw;
+using TWLogAnalyzer.voice;
 
 namespace TWLogAnalyzer
 {

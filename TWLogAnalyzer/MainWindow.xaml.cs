@@ -1,19 +1,17 @@
-﻿using System.IO;
-using System;
-using System.Reflection;
-using System.Windows;
-using System.Threading.Tasks;
-using System.Configuration;
-using System.Runtime.Serialization.Json;
+﻿using System;
 using System.ComponentModel;
+using System.Configuration;
+using System.IO;
+using System.Reflection;
+using System.Runtime.Serialization.Json;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Threading;
-
 using TWLogAnalyzer.common;
 using TWLogAnalyzer.tw;
 using TWLogAnalyzer.voice.bouyomi;
-using System.Collections.ObjectModel;
-using System.Windows.Controls;
-using System.Windows.Media;
 
 namespace TWLogAnalyzer
 {
