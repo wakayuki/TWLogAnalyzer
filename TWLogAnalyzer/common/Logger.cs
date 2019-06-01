@@ -17,7 +17,11 @@ namespace TWLogAnalyzer.common
 
         public static void init(string logFilePath, bool logEnabled)
         {
-            File.Delete(logFilePath);
+            if (logEnabled)
+            {
+                // ログ出力モードの場合だけログファイルを作り直す
+                File.Delete(logFilePath);
+            }
             instance = new Logger(logFilePath, logEnabled);
         }
 
