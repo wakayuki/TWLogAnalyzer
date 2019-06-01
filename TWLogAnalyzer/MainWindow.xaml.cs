@@ -80,11 +80,22 @@ namespace TWLogAnalyzer
         private DateTime NextGolronTime = DateTime.MaxValue;
         private DateTime NextGolmodafTime = DateTime.MaxValue;
 
+
         public MainWindow()
         {
             InitializeComponent();
 
-            Logger.init(Directory.GetParent(Assembly.GetEntryAssembly().Location) + @"\debug.log", true);
+            // しばらくオプション増える予定ないし、コマンドラインの解析はさぼる。。。
+            bool isLogging = false;
+            foreach (string line in App.CommandLineArgs)
+            {
+                if (line.Equals("debug"))
+                {
+                    isLogging = true;
+                }
+            }
+
+            Logger.init(Directory.GetParent(Assembly.GetEntryAssembly().Location) + @"\debug.log", isLogging);
 
             try
             {
