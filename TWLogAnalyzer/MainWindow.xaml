@@ -6,16 +6,13 @@
         xmlns:local="clr-namespace:TWLogAnalyzer"
         Closing="Window_Closing"
         Title="TWLogAnalyzer" Height="514" Width="682">
-    <Window.DataContext>
-        <local:MainViewModel/>
-    </Window.DataContext>
     <Grid>
-        <Button x:Name="btnStart" Content="監視開始" HorizontalAlignment="Left" Margin="26,16,0,0" VerticalAlignment="Top" Width="75" Click="BtnStart_Click"/>
-        <Button x:Name="btnEnd" Content="監視終了" HorizontalAlignment="Left" Margin="119,16,0,0" VerticalAlignment="Top" Width="75" Click="BtnEnd_Click"/>
-        <CheckBox x:Name="chkBouyomi" Content="棒読みちゃん連携" HorizontalAlignment="Left" Height="18" Margin="212,19,0,0" VerticalAlignment="Top" Width="114" Checked="ChkBouyomi_Checked" Unchecked="ChkBouyomi_Unchecked"/>
-        <TextBox x:Name="txtBouyomiPath" HorizontalAlignment="Left" Height="20" Margin="326,17,0,0" TextWrapping="Wrap" Text="BouyomiChan.exe" VerticalAlignment="Top" Width="287"/>
-        <Label x:Name="label" Content="(BouyomiChan.exeのパスを指定してください)" HorizontalAlignment="Left" Margin="326,34,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="lblBouyomiState" Content="" Margin="627,16,0,0" VerticalAlignment="Top" RenderTransformOrigin="9.1,0.346" HorizontalAlignment="Left" Width="10"/>
+        <Button x:Name="btnStart" Content="監視開始" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75" Click="BtnStart_Click"/>
+        <Button x:Name="btnEnd" Content="監視終了" HorizontalAlignment="Left" Margin="101,10,0,0" VerticalAlignment="Top" Width="75" Click="BtnEnd_Click"/>
+        <Button x:Name="btnOpenLog" Content="ログフォルダを開く" HorizontalAlignment="Left" Margin="10,35,0,0" VerticalAlignment="Top" Width="114" Click="BtnOpenLog_Click"/>
+        <CheckBox x:Name="chkBouyomi" Content="棒読みちゃん連携" HorizontalAlignment="Left" Height="18" Margin="194,13,0,0" VerticalAlignment="Top" Width="114" Checked="ChkBouyomi_Checked" Unchecked="ChkBouyomi_Unchecked"/>
+        <TextBox x:Name="txtBouyomiPath" HorizontalAlignment="Left" Height="20" Margin="308,11,0,0" TextWrapping="Wrap" Text="BouyomiChan.exe" VerticalAlignment="Top" Width="287"/>
+        <Label x:Name="label" Content="(BouyomiChan.exeのパスを指定してください)" HorizontalAlignment="Left" Margin="308,28,0,0" VerticalAlignment="Top"/>
         <GroupBox x:Name="bossGroup" Header="ボス沸き情報(β】" HorizontalAlignment="Left" Height="148" Margin="10,65,0,0" VerticalAlignment="Top" Width="329">
             <Grid Margin="0,0,0,0">
                 <CheckBox x:Name="chkBossAnnounce" Content="ボス出現予測の棒読みちゃんアナウンスを実行する" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" Checked="ChkBossAnnounce_Checked" Unchecked="ChkBossAnnounce_Unchecked" Height="15" Width="256"/>
@@ -55,7 +52,7 @@
                 </DataGrid>
             </TabItem>
         </TabControl>
-        <GroupBox x:Name="zikyuGroup" Header="時給計算(5分平均/10分平均)" Height="87" Margin="359,65,10,0" VerticalAlignment="Top">
+        <GroupBox x:Name="zikyuGroup" Header="時給計算(5分平均/10分平均)" Height="87" Margin="344,65,25,0" VerticalAlignment="Top">
             <Grid Margin="0,0,-2,-12">
                 <Label x:Name="lblExp" Content="経験値: " Margin="36,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="52"/>
                 <Label x:Name="lblExpValue" Content="" HorizontalAlignment="Left" Margin="88,10,0,0" VerticalAlignment="Top"/>
@@ -64,7 +61,7 @@
             </Grid>
         </GroupBox>
         <StatusBar Height="31" HorizontalAlignment="Stretch" Name="StatusBar" VerticalAlignment="Bottom" Grid.Row="1" >
-            <Label x:Name="lblStatus" Content="" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+            <Label x:Name="lblStatus" Content="{Binding Status, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
         </StatusBar>
     </Grid>
 </Window>
