@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Configuration;
+using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Runtime.Serialization.Json;
@@ -79,11 +80,14 @@ namespace TWLogAnalyzer
         // 次のボスアナウンス時間
         private DateTime NextGolronTime = DateTime.MaxValue;
         private DateTime NextGolmodafTime = DateTime.MaxValue;
-
+        MainViewModel Model { get; }
 
         public MainWindow()
         {
             InitializeComponent();
+
+            Model = new MainViewModel();
+            this.DataContext = Model;
 
             // しばらくオプション増える予定ないし、コマンドラインの解析はさぼる。。。
             bool isLogging = false;
@@ -129,7 +133,7 @@ namespace TWLogAnalyzer
         {
             Dispatcher.Invoke((Action)(() =>
             {
-                ((MainViewModel)this.DataContext).Init();
+                Model.Init();
             }));
         }
 
@@ -168,14 +172,14 @@ namespace TWLogAnalyzer
         private void BtnStart_Click(object sender, RoutedEventArgs e)
         {
             btnStart.IsEnabled = false;
-            lblStatus.Content = "監視初期化中";
+            Model.updateWatchStatus("監視初期化中");
             Task.Run(() =>
             {
                 Manager.WatchStart();
                 Dispatcher.Invoke((Action)(() =>
                 {
                     btnEnd.IsEnabled = true;
-                    lblStatus.Content = "監視中";
+                    Model.updateWatchStatus("監視中");
                 }));
             });
         }
@@ -183,14 +187,14 @@ namespace TWLogAnalyzer
         private void BtnEnd_Click(object sender, RoutedEventArgs e)
         {
             btnEnd.IsEnabled = false;
-            lblStatus.Content = "監視停止中";
+            Model.updateWatchStatus("監視停止処理中");
             Task.Run(() =>
             {
                 Manager.WatchStop();
                 Dispatcher.Invoke((Action)(() =>
                 {
                     btnStart.IsEnabled = true;
-                    lblStatus.Content = "";
+                    Model.updateWatchStatus("");
                 }));
             });
         }
@@ -232,6 +236,14 @@ namespace TWLogAnalyzer
                     chkBouyomi.IsEnabled = true;
                 }));
             });
+        }
+
+        internal void Notify(string message)
+        {
+            Dispatcher.Invoke((Action)(() =>
+            {
+                Model.updateBouyomiState(message);
+            }));
         }
 
         private void ChkBouyomi_Unchecked(object sender, RoutedEventArgs e)
@@ -279,7 +291,7 @@ namespace TWLogAnalyzer
         {
             Dispatcher.Invoke((Action)(() =>
             {
-                lblBouyomiState.Content = message;
+                Model.updateBouyomiState(message);
             }));
         }
 
@@ -309,7 +321,7 @@ namespace TWLogAnalyzer
         {
             Dispatcher.Invoke((Action)(() =>
             {
-                (this.DataContext as MainViewModel).ClubChats.Add(log);
+                Model.ClubChats.Add(log);
                 ScrollToLast(this.clubChat);
             }));
         }
@@ -318,7 +330,7 @@ namespace TWLogAnalyzer
         {
             Dispatcher.Invoke((Action)(() =>
             {
-                (this.DataContext as MainViewModel).TeamChats.Add(log);
+                Model.TeamChats.Add(log);
                 ScrollToLast(this.teamChat);
             }));
         }
@@ -326,7 +338,7 @@ namespace TWLogAnalyzer
         {
             Dispatcher.Invoke((Action)(() =>
             {
-                (this.DataContext as MainViewModel).WisperChats.Add(log);
+                Model.WisperChats.Add(log);
                 ScrollToLast(this.wisperChat);
             }));
         }
@@ -342,6 +354,11 @@ namespace TWLogAnalyzer
                     if (scroll != null) scroll.ScrollToEnd();
                 }
             }
+        }
+
+        private void BtnOpenLog_Click(object sender, RoutedEventArgs e)
+        {
+            Process.Start("EXPLORER.EXE", $"{Manager.InstDir}\\ChatLog");
         }
     }
 }

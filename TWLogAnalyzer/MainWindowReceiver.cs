@@ -63,7 +63,10 @@ namespace TWLogAnalyzer
             if (log.Kind == TwLogKind.CLUB)
             {
                 Window.AddClubChat(log);
-                Speak(log.Message);
+                if (!log.Message.StartsWith("クラブ告知 "))
+                {
+                    Speak(log.Message);
+                }
             }
 
 
@@ -247,10 +250,7 @@ namespace TWLogAnalyzer
                 catch (Exception ex)
                 {
                     Logger.Instance.PutMessage($"棒読みちゃんがしゃべれませんでした: ${ex.Message}");
-                    Window.Dispatcher.Invoke((Action)(() =>
-                    {
-                        Window.lblBouyomiState.Content = "棒読みちゃん連携に失敗しました。\n棒読みちゃんが起動しているか確認してください。";
-                    }));
+                    Window.Notify("棒読みちゃん連携に失敗しました。\n棒読みちゃんが起動しているか確認してください。");
                 }
             }
         }
@@ -272,10 +272,7 @@ namespace TWLogAnalyzer
                 catch (Exception ex)
                 {
                     Logger.Instance.PutMessage($"棒読みちゃんがしゃべれませんでした: ${ex.Message}");
-                    Window.Dispatcher.Invoke((Action)(() =>
-                    {
-                        Window.lblBouyomiState.Content = "棒読みちゃん連携に失敗しました。\n棒読みちゃんが起動しているか確認してください。";
-                    }));
+                    Window.Notify("棒読みちゃん連携に失敗しました。\n棒読みちゃんが起動しているか確認してください。");
                 }
             }
         }

@@ -11,7 +11,7 @@ namespace TWLogAnalyzer.tw
     /// </summary>
     public class TwManager
     {
-        private string InstDir;
+        public string InstDir { get; private set; }
         public TwLogReceiver Receiver { get; private set; }
         private TwLogWatcher Watcher = null;
 
